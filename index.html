@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일상에서 시작하는 AI 활용법</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --ink: #1a1814;
+    --ink-light: #5a5550;
+    --accent: #c84b2f;
+    --accent2: #2a5c8a;
+    --paper: #fdfaf4;
+    --line: #d4cfc6;
+    --tag-chatgpt: #10a37f;
+    --tag-claude: #c87a2f;
+    --tag-web: #2a5c8a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* 배경 질감 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.035) 27px, rgba(0,0,0,0.035) 28px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 헤더 */
+  header {
+    margin-bottom: 60px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+  }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  header h1 {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .header-meta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ink-light);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    transition: all 0.2s;
+    background: var(--paper);
+  }
+  .header-meta a:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .slide-icon { font-size: 14px; }
+
+  /* 파트 섹션 */
+  .part {
+    margin-bottom: 48px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .part:nth-child(1) { animation-delay: 0.05s; }
+  .part:nth-child(2) { animation-delay: 0.1s; }
+  .part:nth-child(3) { animation-delay: 0.15s; }
+  .part:nth-child(4) { animation-delay: 0.2s; }
+  .part:nth-child(5) { animation-delay: 0.25s; }
+  .part:nth-child(6) { animation-delay: 0.3s; }
+  .part:nth-child(7) { animation-delay: 0.35s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .part-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .part-num {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    min-width: 48px;
+  }
+
+  .part-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .part-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-left: 62px;
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* 링크 목록 */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 62px;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    transition: all 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.18s;
+  }
+
+  .link-item:hover {
+    border-color: var(--ink);
+    transform: translateX(3px);
+    box-shadow: -3px 3px 0 rgba(0,0,0,0.08);
+  }
+
+  .link-item:hover::before {
+    background: var(--accent);
+  }
+
+  .link-item.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .link-label {
+    font-size: 14px;
+    font-weight: 400;
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  /* 플랫폼 뱃지 */
+  .badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-chatgpt { background: #d4f0e8; color: var(--tag-chatgpt); }
+  .badge-claude  { background: #f5e6d0; color: #a05a10; }
+  .badge-web     { background: #dce8f5; color: var(--tag-web); }
+  .badge-lock    { background: #eee; color: #999; }
+
+  .arrow {
+    font-size: 14px;
+    color: var(--line);
+    transition: color 0.18s;
+  }
+  .link-item:hover .arrow { color: var(--accent); }
+
+  /* Part 7 준비중 */
+  /* Part 7 프롬프트 카드 */
+  .prompt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 62px;
+  }
+
+  .prompt-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .prompt-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+    transition: background 0.15s;
+  }
+  .prompt-card-header:hover { background: rgba(0,0,0,0.025); }
+
+  .prompt-card-title {
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .prompt-toggle {
+    font-size: 11px;
+    color: var(--ink-light);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .prompt-card.open .prompt-toggle {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .prompt-body {
+    display: none;
+    border-top: 1px solid var(--line);
+    padding: 0;
+  }
+  .prompt-card.open .prompt-body { display: block; }
+
+  .prompt-text {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12.5px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--ink);
+    white-space: pre-wrap;
+    padding: 16px 18px;
+    margin: 0;
+    background: #faf7f0;
+  }
+
+  .prompt-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 16px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+
+  .copy-btn {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { background: var(--ink); color: var(--paper); }
+  .copy-btn.copied { background: var(--tag-chatgpt); border-color: var(--tag-chatgpt); color: #fff; }
+
+  @media (max-width: 520px) {
+    .prompt-list { padding-left: 0; }
+  }
+
+  /* 푸터 */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 520px) {
+    .part-desc { margin-left: 0; }
+    .links { padding-left: 0; }
+    .coming-soon { margin-left: 0; }
+    .part-header { flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <span class="label">OCI 강의 자료</span>
+    <h1>일상에서 시작하는<br>AI 활용법</h1>
+    <div class="header-meta">
+      <a href="https://www.miricanvas.com/v2/ko/design2/v/6f5e5633-f334-45ef-aff1-89ece9c9d1d0" target="_blank" rel="noopener">
+        <span class="slide-icon">🪟</span> 강의 슬라이드 보기
+      </a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Part 1 -->
+    <section class="part">
+      <div class="part-header">
+        <span class="part-num">Part 1</span>
+        <h2 class="part-title">검색, 질문에 활용하기</h2>
+      </div>
+      <p class="part-desc">구글, 네이버 대신 AI한테 먼저 물어보세요.</p>
+      <div class="links">
+        <a class="link-item" href="https://chatgpt.com/share/6a174753-860c-83aa-acc8-36fe0a2f4d4c" target="_blank" rel="noopener">
+          <span class="link-label">매일 쓸 수 있는 것들</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://claude.ai/share/b1f7d1b1-8f82-4931-bcb8-72613f41d7b1" target="_blank" rel="noopener">
+          <span class="link-label">전문적인 지식</span>
+          <span class="badge badge-claude">Claude</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://claude.ai/share/fea25f4e-86d8-40cd-937f-d0ea695b9680" target="_blank" rel="noopener">
+          <span class="link-label">정보 검색, 자료 조사</span>
+          <span class="badge badge-claude">Claude</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Part 2 -->
+    <section class="part">
+      <div class="part-header">
+        <span class="part-num">Part 2</span>
+        <h2 class="part-title">글쓰기</h2>
+      </div>
+      <p class="part-desc">처음 한 줄이 제일 어렵습니다. 그 한 줄을 AI가 대신해줘요.</p>
+      <div class="links">
+        <a class="link-item" href="https://chatgpt.com/share/6a177e01-7c94-83a6-a756-ab8cbb1b32cf" target="_blank" rel="noopener">
+          <span class="link-label">이메일</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <span class="link-item disabled">
+          <span class="link-label">거절 메시지</span>
+          <span class="badge badge-lock">비공개</span>
+        </span>
+        <a class="link-item" href="https://chatgpt.com/share/6a177e16-04f0-83a4-bcf4-96bbd82631fc" target="_blank" rel="noopener">
+          <span class="link-label">블로그</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Part 3 -->
+    <section class="part">
+      <div class="part-header">
+        <span class="part-num">Part 3</span>
+        <h2 class="part-title">교육</h2>
+      </div>
+      <p class="part-desc">AI 덕분에 시골 마을에 눌러 앉게 됐어요.</p>
+      <div class="links">
+        <a class="link-item" href="https://chatgpt.com/share/6a177e63-c614-83a8-bc29-9351200659be" target="_blank" rel="noopener">
+          <span class="link-label">간단한 질문</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://chatgpt.com/share/6a177e71-70f8-83a5-a7a6-01d09e4d64e2" target="_blank" rel="noopener">
+          <span class="link-label">수학 문제 풀기</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://claude.ai/share/2f92af36-4bb6-4b09-a016-214b93f9c903" target="_blank" rel="noopener">
+          <span class="link-label">커리큘럼 만들기</span>
+          <span class="badge badge-claude">Claude</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://yoongahee.com/wordcard/" target="_blank" rel="noopener">
+          <span class="link-label">영어 단어 사이트</span>
+          <span class="badge badge-web">Web</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://chatgpt.com/c/6a13d9fd-d258-83a2-a75b-4bf94d9b649e" target="_blank" rel="noopener">
+          <span class="link-label">영상 모드</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Part 4 -->
+    <section class="part">
+      <div class="part-header">
+        <span class="part-num">Part 4</span>
+        <h2 class="part-title">이미지 입력 활용</h2>
+      </div>
+      <p class="part-desc">장황하게 텍스트로 입력하지 않아도 돼요. 찍고 보여주세요.</p>
+      <div class="links">
+        <a class="link-item" href="https://chatgpt.com/share/6a177ebb-c68c-83a7-a270-1efe171dd734" target="_blank" rel="noopener">
+          <span class="link-label">냉장고 사진</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://chatgpt.com/share/6a177ede-4bec-83a8-bb57-c02c3b66f8e3" target="_blank" rel="noopener">
+          <span class="link-label">집 정리하기</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://chatgpt.com/share/6a177eef-881c-83a7-9bd6-f16b18921d92" target="_blank" rel="noopener">
+          <span class="link-label">영수증, 청구서 사진</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://claude.ai/share/a26386f0-255f-4d04-8271-bef2de6b2000" target="_blank" rel="noopener">
+          <span class="link-label">건강 검진 결과</span>
+          <span class="badge badge-claude">Claude</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Part 5 -->
+    <section class="part">
+      <div class="part-header">
+        <span class="part-num">Part 5</span>
+        <h2 class="part-title">이미지 생성</h2>
+      </div>
+      <p class="part-desc">디자이너 없어도 됩니다. 말로 설명하면 이미지가 나와요.</p>
+      <div class="links">
+        <a class="link-item" href="https://chatgpt.com/share/6a177f0d-d0e0-83a9-a824-cd287d849221" target="_blank" rel="noopener">
+          <span class="link-label">사진 꾸미기</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://chatgpt.com/share/6a177f1e-4ad4-83a5-9b6a-14140472a7b5" target="_blank" rel="noopener">
+          <span class="link-label">캐릭터 변경하기</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://chatgpt.com/share/6a177f3e-805c-83aa-8139-2b2f0a02a9cc" target="_blank" rel="noopener">
+          <span class="link-label">제품 디자인</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://chatgpt.com/share/6a177f60-923c-83a9-8b19-0b413c227006" target="_blank" rel="noopener">
+          <span class="link-label">어반 스케치</span>
+          <span class="badge badge-chatgpt">ChatGPT</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://www.instagram.com/p/DAUlDE_R8ok/" target="_blank" rel="noopener">
+          <span class="link-label">도서 표지</span>
+          <span class="badge badge-web">Instagram</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Part 6 -->
+    <section class="part">
+      <div class="part-header">
+        <span class="part-num">Part 6</span>
+        <h2 class="part-title">바이브 코딩</h2>
+      </div>
+      <p class="part-desc">코드 몰라도 됩니다. 불편한 걸 말로 설명하면 도구가 생겨요.</p>
+      <div class="links">
+        <a class="link-item" href="https://yoongahee.com/how-many-candles/" target="_blank" rel="noopener">
+          <span class="link-label">생일 초 몇 개?</span>
+          <span class="badge badge-web">Web</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://yoongahee.com/diet-tracker/" target="_blank" rel="noopener">
+          <span class="link-label">다이어트 트래커</span>
+          <span class="badge badge-web">Web</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://yoongahee.com/jeil-faucet-defect/" target="_blank" rel="noopener">
+          <span class="link-label">대시보드 — 수전</span>
+          <span class="badge badge-web">Web</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://claude.ai/share/87461cd5-383f-47ae-b070-d0bab46d9c47" target="_blank" rel="noopener">
+          <span class="link-label">대시보드(수전) 프롬프트</span>
+          <span class="badge badge-claude">Claude</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://yoongahee.com/apt-problem/" target="_blank" rel="noopener">
+          <span class="link-label">대시보드 — 하자</span>
+          <span class="badge badge-web">Web</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://claude.ai/share/af2c0e63-ee80-44c7-a878-9ae541f98906" target="_blank" rel="noopener">
+          <span class="link-label">대시보드(하자) 프롬프트</span>
+          <span class="badge badge-claude">Claude</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://yoongahee.com/nutrition/" target="_blank" rel="noopener">
+          <span class="link-label">영양 정보표</span>
+          <span class="badge badge-web">Web</span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="link-item" href="https://yoongahee.com/olive-pension/" target="_blank" rel="noopener">
+          <span class="link-label">펜션</span>
+          <span class="badge badge-web">Web</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Part 7 -->
+    <section class="part">
+      <div class="part-header">
+        <span class="part-num">Part 7</span>
+        <h2 class="part-title">일상에서 업무로</h2>
+      </div>
+      <p class="part-desc">복사해서 바로 쓸 수 있는 프롬프트 모음입니다.</p>
+
+      <div class="prompt-list">
+
+        <!-- 1 -->
+        <div class="prompt-card" id="card1">
+          <div class="prompt-card-header" onclick="toggleCard('card1')">
+            <span class="prompt-card-title">뉴스 기사 — 관련 기사 찾기</span>
+            <span class="prompt-toggle">펼치기</span>
+          </div>
+          <div class="prompt-body">
+            <pre class="prompt-text">우리 회사 OCI는 폴리실리콘, 인산, 모노실란을 생산하는 한국 화학 소재 기업이야. 
+
+지금 열려 있는 이 페이지에서 우리 회사가 관심 가져야 할 기사를 찾아서 아래 형식으로 정리해줘.
+
+[기사 제목]
+- 링크
+- 내용 한 줄 요약
+- 관심 가져야 할 이유</pre>
+            <div class="prompt-actions">
+              <button class="copy-btn" onclick="copyPrompt('card1', this)">복사하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="prompt-card" id="card2">
+          <div class="prompt-card-header" onclick="toggleCard('card2')">
+            <span class="prompt-card-title">뉴스 기사 — 번역, 요약</span>
+            <span class="prompt-toggle">펼치기</span>
+          </div>
+          <div class="prompt-body">
+            <pre class="prompt-text">현재 열려 있는 기사를 한국어로 요약해줘. 아래 형식으로.
+
+한 줄 요약: 
+핵심 내용 3가지:
+모르는 용어가 있으면 쉽게 설명도 추가해줘.</pre>
+            <div class="prompt-actions">
+              <button class="copy-btn" onclick="copyPrompt('card2', this)">복사하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="prompt-card" id="card3">
+          <div class="prompt-card-header" onclick="toggleCard('card3')">
+            <span class="prompt-card-title">뉴스 기사 — 번역, 분석</span>
+            <span class="prompt-toggle">펼치기</span>
+          </div>
+          <div class="prompt-body">
+            <pre class="prompt-text">이 기사 내용이 OCI 같은 폴리실리콘·모노실란 생산 기업에 어떤 영향을 줄 수 있는지 분석해줘. 아래 형식으로.
+
+우리에게 유리한 점:
+우리에게 불리한 점:
+지금 당장 주목해야 할 점:</pre>
+            <div class="prompt-actions">
+              <button class="copy-btn" onclick="copyPrompt('card3', this)">복사하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="prompt-card" id="card4">
+          <div class="prompt-card-header" onclick="toggleCard('card4')">
+            <span class="prompt-card-title">경제 브리핑 에이전트</span>
+            <span class="prompt-toggle">펼치기</span>
+          </div>
+          <div class="prompt-body">
+            <pre class="prompt-text"># 역할 정의
+
+당신은 OCI 군산공장 임직원의 전담 경제 브리핑 비서입니다.
+매일 아침, 임직원이 하루를 시작하기 전에 글로벌 경제 동향과
+소재 시장 변화를 파악하고 우리 사업에 미치는 영향을 선제적으로
+판단하도록 돕는 것이 목적입니다.
+
+---
+
+# 회사 정보
+
+- 회사명: OCI (주), 군산공장
+- 주요 생산 품목: 폴리실리콘(반도체·태양광용), 인산, 모노실란 SiH₄(2차전지 실리콘음극재 원료)
+- 주요 납품처: 넥세온(영국), 파나소닉(일본)
+- 원가 구조: 전력·가스 비중 높음, 수입 원자재 달러 결제 비중 상당
+- 주요 관심 지표: 유가, 천연가스, 원/달러 환율, 폴리실리콘 스팟가, 반도체·2차전지 시장 동향, 미중 무역 갈등
+
+---
+
+# 브리핑 실행 절차
+
+## Step 1. 데이터 수집 (오늘 날짜 기준 웹 검색)
+- WTI·Brent 유가 — 전일 종가, 전주 대비 변동률
+- 천연가스 가격 (Henry Hub)
+- 원/달러 환율 — 당일 기준
+- 폴리실리콘 스팟 가격 — 중국 기준
+- 반도체 시장 주요 뉴스
+- 2차전지·실리콘음극재 관련 주요 뉴스
+- 미중 무역 갈등 — 폴리실리콘·소재 관세·규제 동향
+- 글로벌 공급망 이슈 1~2건
+
+## Step 2. OCI 영향 분석
+- 유가·가스 변동 → 공정 에너지 비용 영향
+- 폴리실리콘 스팟 가격 → 판가·마진 영향
+- 환율 변동 → 수입 원자재 비용 및 수출 경쟁력
+- 반도체 수요 → 폴리실리콘 수요 전망 신호
+- 2차전지 시장 → 모노실란 수요 및 넥세온·파나소닉 동향
+- 미중 갈등 → 중국산 폴리실리콘 공급 과잉·관세 이슈
+
+## Step 3. 브리핑 작성
+
+---
+
+# 출력 포맷
+
+[OCI 경제 브리핑] MM월 DD일 (요일)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 핵심 지표 요약
+
+| 지표 | 현재 | 전일/전주 대비 | 추세 |
+|------|------|--------------|------|
+| WTI 유가 | $XX.X/배럴 | ▲/▼ X.X% | |
+| Brent 유가 | $XX.X/배럴 | ▲/▼ X.X% | |
+| 천연가스(HH) | $X.XX/MMBtu | ▲/▼ X.X% | |
+| 원/달러 환율 | X,XXX원 | ▲/▼ XXX원 | |
+| 폴리실리콘 | $XX/kg | ▲/▼ X.X% | |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📰 오늘의 주요 뉴스 (출처 포함)
+
+1. [제목]
+   📌 핵심: [2줄 이내]
+   🔗 출처: [매체명] — [제목 또는 URL]
+
+2. [제목]
+   📌 핵심: [2줄 이내]
+   🔗 출처: [매체명] — [제목 또는 URL]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ 오늘 주목할 리스크
+
+1. [리스크 제목]
+   - 원인: [1줄]
+   - OCI 영향: [수치 포함]
+   - 심화 시나리오: [1줄]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 기회 요인
+
+[제목]
+- 근거: [1줄]
+- 활용 방향: [OCI 관점 1줄]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏭 OCI, 지금 신경 써야 할 것
+
+▶ 이번 주 최우선 이슈
+→ [이슈명]: [이유·영향 2줄]
+
+▶ 부서별 확인 포인트
+- 구매/조달팀: [원자재·에너지 점검 사항]
+- 재무팀: [환율·금리 점검 사항]
+- 영업/수출팀: [폴리실리콘·모노실란 판가·고객사 대응]
+- 생산팀: [에너지 비용·원자재 재고 관련]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ 오늘의 액션 아이템
+
+→ [즉시] [담당 부서]: [오늘 실행할 것]
+→ [이번 주 내] [담당 부서]: [이번 주 안에 처리할 것]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📌 한 줄 총평
+[오늘 상황을 한 문장으로 — OCI 경영 판단 포함]
+
+---
+
+# 작성 원칙
+
+- 수치 반드시 포함. "상승했습니다" 같은 추상적 표현 금지
+- 영향 분석은 OCI 관점으로 구체화
+- 출처는 매체명+제목 함께 표기
+- 서론·인사말 없이 브리핑 헤더로 바로 시작
+
+---
+
+# 시작 조건
+
+"브리핑 시작해줘" / "오늘 OCI 브리핑" / "오늘 뭐가 중요해?" 입력 시 브리핑 시작</pre>
+            <div class="prompt-actions">
+              <button class="copy-btn" onclick="copyPrompt('card4', this)">복사하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="prompt-card" id="card5">
+          <div class="prompt-card-header" onclick="toggleCard('card5')">
+            <span class="prompt-card-title">메일 정리</span>
+            <span class="prompt-toggle">펼치기</span>
+          </div>
+          <div class="prompt-body">
+            <pre class="prompt-text">받은 메일함에서 오늘 회신이 필요한 메일을 찾아줘. 
+
+- 우선순위가 높은 순서로 정리하고 
+- 회신이 필요한 메일은 초안 작성해줘</pre>
+            <div class="prompt-actions">
+              <button class="copy-btn" onclick="copyPrompt('card5', this)">복사하기</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+<script>
+  function toggleCard(id) {
+    const card = document.getElementById(id);
+    const btn = card.querySelector('.prompt-toggle');
+    card.classList.toggle('open');
+    btn.textContent = card.classList.contains('open') ? '접기' : '펼치기';
+  }
+
+  function copyPrompt(id, btn) {
+    const text = document.querySelector('#' + id + ' .prompt-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '복사됨 ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '복사하기';
+        btn.classList.remove('copied');
+      }, 1800);
+    });
+  }
+</script>
+
+  </main>
+
+  <footer>
+    강의 자료는 수업 참가자 전용입니다 · yoongahee.com
+  </footer>
+
+</div>
+</body>
+</html>
