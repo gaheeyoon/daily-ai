@@ -356,10 +356,10 @@
 <div class="container">
 
   <header>
-    <span class="label">OCI 강의 자료</span>
+    <span class="label">강의 자료</span>
     <h1>일상에서 시작하는<br>AI 활용법</h1>
     <div class="header-meta">
-      <a href="https://www.miricanvas.com/v2/ko/design2/v/6f5e5633-f334-45ef-aff1-89ece9c9d1d0" target="_blank" rel="noopener">
+      <a href="https://www.miricanvas.com/v2/ko/design2/v/5c96c51a-863c-4783-9f6c-3b3874bb094f" target="_blank" rel="noopener">
         <span class="slide-icon">🪟</span> 강의 슬라이드 보기
       </a>
     </div>
@@ -572,233 +572,6 @@
       </div>
     </section>
 
-    <!-- Part 7 -->
-    <section class="part">
-      <div class="part-header">
-        <span class="part-num">Part 7</span>
-        <h2 class="part-title">일상에서 업무로</h2>
-      </div>
-      <p class="part-desc">복사해서 바로 쓸 수 있는 프롬프트 모음입니다.</p>
-
-      <div class="prompt-list">
-
-        <!-- 1 -->
-        <div class="prompt-card" id="card1">
-          <div class="prompt-card-header" onclick="toggleCard('card1')">
-            <span class="prompt-card-title">뉴스 기사 — 관련 기사 찾기</span>
-            <span class="prompt-toggle">펼치기</span>
-          </div>
-          <div class="prompt-body">
-            <pre class="prompt-text">우리 회사 OCI는 폴리실리콘, 인산, 모노실란을 생산하는 한국 화학 소재 기업이야. 
-
-지금 열려 있는 이 페이지에서 우리 회사가 관심 가져야 할 기사를 찾아서 아래 형식으로 정리해줘.
-
-[기사 제목]
-- 링크
-- 내용 한 줄 요약
-- 관심 가져야 할 이유</pre>
-            <div class="prompt-actions">
-              <button class="copy-btn" onclick="copyPrompt('card1', this)">복사하기</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2 -->
-        <div class="prompt-card" id="card2">
-          <div class="prompt-card-header" onclick="toggleCard('card2')">
-            <span class="prompt-card-title">뉴스 기사 — 번역, 요약</span>
-            <span class="prompt-toggle">펼치기</span>
-          </div>
-          <div class="prompt-body">
-            <pre class="prompt-text">현재 열려 있는 기사를 한국어로 요약해줘. 아래 형식으로.
-
-한 줄 요약: 
-핵심 내용 3가지:
-모르는 용어가 있으면 쉽게 설명도 추가해줘.</pre>
-            <div class="prompt-actions">
-              <button class="copy-btn" onclick="copyPrompt('card2', this)">복사하기</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3 -->
-        <div class="prompt-card" id="card3">
-          <div class="prompt-card-header" onclick="toggleCard('card3')">
-            <span class="prompt-card-title">뉴스 기사 — 번역, 분석</span>
-            <span class="prompt-toggle">펼치기</span>
-          </div>
-          <div class="prompt-body">
-            <pre class="prompt-text">이 기사 내용이 OCI 같은 폴리실리콘·모노실란 생산 기업에 어떤 영향을 줄 수 있는지 분석해줘. 아래 형식으로.
-
-우리에게 유리한 점:
-우리에게 불리한 점:
-지금 당장 주목해야 할 점:</pre>
-            <div class="prompt-actions">
-              <button class="copy-btn" onclick="copyPrompt('card3', this)">복사하기</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4 -->
-        <div class="prompt-card" id="card4">
-          <div class="prompt-card-header" onclick="toggleCard('card4')">
-            <span class="prompt-card-title">경제 브리핑 에이전트</span>
-            <span class="prompt-toggle">펼치기</span>
-          </div>
-          <div class="prompt-body">
-            <pre class="prompt-text"># 역할 정의
-
-당신은 OCI 군산공장 임직원의 전담 경제 브리핑 비서입니다.
-매일 아침, 임직원이 하루를 시작하기 전에 글로벌 경제 동향과
-소재 시장 변화를 파악하고 우리 사업에 미치는 영향을 선제적으로
-판단하도록 돕는 것이 목적입니다.
-
----
-
-# 회사 정보
-
-- 회사명: OCI (주), 군산공장
-- 주요 생산 품목: 폴리실리콘(반도체·태양광용), 인산, 모노실란 SiH₄(2차전지 실리콘음극재 원료)
-- 주요 납품처: 넥세온(영국), 파나소닉(일본)
-- 원가 구조: 전력·가스 비중 높음, 수입 원자재 달러 결제 비중 상당
-- 주요 관심 지표: 유가, 천연가스, 원/달러 환율, 폴리실리콘 스팟가, 반도체·2차전지 시장 동향, 미중 무역 갈등
-
----
-
-# 브리핑 실행 절차
-
-## Step 1. 데이터 수집 (오늘 날짜 기준 웹 검색)
-- WTI·Brent 유가 — 전일 종가, 전주 대비 변동률
-- 천연가스 가격 (Henry Hub)
-- 원/달러 환율 — 당일 기준
-- 폴리실리콘 스팟 가격 — 중국 기준
-- 반도체 시장 주요 뉴스
-- 2차전지·실리콘음극재 관련 주요 뉴스
-- 미중 무역 갈등 — 폴리실리콘·소재 관세·규제 동향
-- 글로벌 공급망 이슈 1~2건
-
-## Step 2. OCI 영향 분석
-- 유가·가스 변동 → 공정 에너지 비용 영향
-- 폴리실리콘 스팟 가격 → 판가·마진 영향
-- 환율 변동 → 수입 원자재 비용 및 수출 경쟁력
-- 반도체 수요 → 폴리실리콘 수요 전망 신호
-- 2차전지 시장 → 모노실란 수요 및 넥세온·파나소닉 동향
-- 미중 갈등 → 중국산 폴리실리콘 공급 과잉·관세 이슈
-
-## Step 3. 브리핑 작성
-
----
-
-# 출력 포맷
-
-[OCI 경제 브리핑] MM월 DD일 (요일)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📊 핵심 지표 요약
-
-| 지표 | 현재 | 전일/전주 대비 | 추세 |
-|------|------|--------------|------|
-| WTI 유가 | $XX.X/배럴 | ▲/▼ X.X% | |
-| Brent 유가 | $XX.X/배럴 | ▲/▼ X.X% | |
-| 천연가스(HH) | $X.XX/MMBtu | ▲/▼ X.X% | |
-| 원/달러 환율 | X,XXX원 | ▲/▼ XXX원 | |
-| 폴리실리콘 | $XX/kg | ▲/▼ X.X% | |
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📰 오늘의 주요 뉴스 (출처 포함)
-
-1. [제목]
-   📌 핵심: [2줄 이내]
-   🔗 출처: [매체명] — [제목 또는 URL]
-
-2. [제목]
-   📌 핵심: [2줄 이내]
-   🔗 출처: [매체명] — [제목 또는 URL]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠️ 오늘 주목할 리스크
-
-1. [리스크 제목]
-   - 원인: [1줄]
-   - OCI 영향: [수치 포함]
-   - 심화 시나리오: [1줄]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-💡 기회 요인
-
-[제목]
-- 근거: [1줄]
-- 활용 방향: [OCI 관점 1줄]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🏭 OCI, 지금 신경 써야 할 것
-
-▶ 이번 주 최우선 이슈
-→ [이슈명]: [이유·영향 2줄]
-
-▶ 부서별 확인 포인트
-- 구매/조달팀: [원자재·에너지 점검 사항]
-- 재무팀: [환율·금리 점검 사항]
-- 영업/수출팀: [폴리실리콘·모노실란 판가·고객사 대응]
-- 생산팀: [에너지 비용·원자재 재고 관련]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ 오늘의 액션 아이템
-
-→ [즉시] [담당 부서]: [오늘 실행할 것]
-→ [이번 주 내] [담당 부서]: [이번 주 안에 처리할 것]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📌 한 줄 총평
-[오늘 상황을 한 문장으로 — OCI 경영 판단 포함]
-
----
-
-# 작성 원칙
-
-- 수치 반드시 포함. "상승했습니다" 같은 추상적 표현 금지
-- 영향 분석은 OCI 관점으로 구체화
-- 출처는 매체명+제목 함께 표기
-- 서론·인사말 없이 브리핑 헤더로 바로 시작
-
----
-
-# 시작 조건
-
-"브리핑 시작해줘" / "오늘 OCI 브리핑" / "오늘 뭐가 중요해?" 입력 시 브리핑 시작</pre>
-            <div class="prompt-actions">
-              <button class="copy-btn" onclick="copyPrompt('card4', this)">복사하기</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5 -->
-        <div class="prompt-card" id="card5">
-          <div class="prompt-card-header" onclick="toggleCard('card5')">
-            <span class="prompt-card-title">메일 정리</span>
-            <span class="prompt-toggle">펼치기</span>
-          </div>
-          <div class="prompt-body">
-            <pre class="prompt-text">받은 메일함에서 오늘 회신이 필요한 메일을 찾아줘. 
-
-- 우선순위가 높은 순서로 정리하고 
-- 회신이 필요한 메일은 초안 작성해줘</pre>
-            <div class="prompt-actions">
-              <button class="copy-btn" onclick="copyPrompt('card5', this)">복사하기</button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
 <script>
   function toggleCard(id) {
     const card = document.getElementById(id);
@@ -823,7 +596,7 @@
   </main>
 
   <footer>
-    강의 자료는 수업 참가자 전용입니다 · yoongahee.com
+    강의 자료는 수업 참가자 전용입니다 · <a href="https://blog.naver.com/hlogs">가히 이야기</a> · <a href="https://www.instagram.com/yoon.gahee">@yoon.gahee</a>
   </footer>
 
 </div>
